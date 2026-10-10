@@ -248,4 +248,4 @@ Fork, branch (`feature/...`), run `pytest -v`, and open a Pull Request. Licensed
 6. Liu, Ting & Zhou (2008). *Isolation Forest*. ICDM.
 7. Pedregosa et al. (2011). *Scikit-learn*. JMLR, 12.
 
-**Author**: Aman Khan· [github.com/codesaman/BharatLens](https://github.com/codesaman/BharatLens)
+**Author**: Mohd Shami · [github.com/mohdshamii/BharatLens](https://github.com/mohdshamii/BharatLens)
