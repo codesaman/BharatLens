@@ -1,0 +1,41 @@
+{
+  "champion_model_name": "RidgeRegression",
+  "best_rmse": 0.1863,
+  "target_variable": "score_change",
+  "feature_count": 54,
+  "test_size": 0.2,
+  "benchmark_table": [
+    {
+      "model_name": "RandomForestRegressor",
+      "mae": 0.8894,
+      "rmse": 1.1511,
+      "r2_score": 0.9299,
+      "cv_r2_mean": 0.9326,
+      "cv_r2_std": 0.0146
+    },
+    {
+      "model_name": "GradientBoostingRegressor",
+      "mae": 0.6723,
+      "rmse": 0.9061,
+      "r2_score": 0.9565,
+      "cv_r2_mean": 0.9596,
+      "cv_r2_std": 0.0104
+    },
+    {
+      "model_name": "RidgeRegression",
+      "mae": 0.1355,
+      "rmse": 0.1863,
+      "r2_score": 0.9982,
+      "cv_r2_mean": 0.9961,
+      "cv_r2_std": 0.0024
+    },
+    {
+      "model_name": "XGBoostRegressor",
+      "mae": 0.6689,
+      "rmse": 0.9284,
+      "r2_score": 0.9544,
+      "cv_r2_mean": 0.9581,
+      "cv_r2_std": 0.0147
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "algorithm": "K-Means",
+  "n_clusters": 4,
+  "features_used": [
+    "dim_health_nutrition_current",
+    "dim_women_empowerment_current",
+    "dim_infrastructure_amenities_current",
+    "dim_economic_employment_current",
+    "dim_demographic_education_current",
+    "census_worker_rate",
+    "census_urban_pct",
+    "mgnrega_daily_wage_rs"
+  ],
+  "silhouette_score": 0.2061,
+  "davies_bouldin_index": 1.5415,
+  "tier_names": {
+    "0": "Tier 1: High-Priority / Aspirational",
+    "1": "Tier 2: Developing / Rural-Agricultural",
+    "2": "Tier 3: Progressing / Semi-Urban Transition",
+    "3": "Tier 4: Front-Runner / Advanced Socioeconomic"
+  },
+  "evaluation_summary": {
+    "candidate_evaluations": {
+      "3": {
+        "silhouette_score": 0.2162,
+        "davies_bouldin_index": 1.5078,
+        "inertia": 3031.2
+      },
+      "4": {
+        "silhouette_score": 0.2061,
+        "davies_bouldin_index": 1.5415,
+        "inertia": 2678.61
+      },
+      "5": {
+        "silhouette_score": 0.2175,
+        "davies_bouldin_index": 1.3595,
+        "inertia": 2388.94
+      },
+      "6": {
+        "silhouette_score": 0.1935,
+        "davies_bouldin_index": 1.3399,
+        "inertia": 2171.64
+      }
+    },
+    "optimal_k": 5
+  },
+  "profiles": {
+    "0": {
+      "cluster_id": 0,
+      "cluster_name": "Tier 1: High-Priority / Aspirational",
+      "district_count": 212,
+      "pct_of_all_districts": 32.97,
+      "mean_bharatlens_score": 49.44,
+      "mean_score_change": 11.44,
+      "mean_health_score": 56.33,
+      "mean_women_empowerment": 53.49,
+      "mean_infrastructure": 59.38,
+      "mean_economic_score": 36.79,
+      "mean_education_score": 36.2,
+      "mean_urban_pct": 16.82,
+      "representative_districts": [
+        {
+          "district": "West Siang",
+          "state": "Arunachal Pradesh"
+        },
+        {
+          "district": "Baksa",
+          "state": "Assam"
+        },
+        {
+          "district": "Barpeta",
+          "state": "Assam"
+        },
+        {
+          "district": "Bongaigaon",
+          "state": "Assam"
+        },
+        {
+          "district": "Cachar",
+          "state": "Assam"
+        },
+        {
+          "district": "Chirang",
+          "state": "Assam"
+        }
+      ]
+    },
+    "1": {
+      "cluster_id": 1,
+      "cluster_name": "Tier 2: Developing / Rural-Agricultural",
+      "district_count": 153,
+      "pct_of_all_districts": 23.79,
+      "mean_bharatlens_score": 53.37,
+      "mean_score_change": 10.81,
+      "mean_health_score": 59.49,
+      "mean_women_empowerment": 54.61,
+      "mean_infrastructure": 60.03,
+      "mean_economic_score": 48.89,
+      "mean_education_score": 38.59,
+      "mean_urban_pct": 17.07,
+      "representative_districts": [
+        {
+          "district": "Anantapur",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "district": "Kurnool",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "district": "Prakasam",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "district": "Vizianagaram",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "district": "Anjaw",
+          "state": "Arunachal Pradesh"
+        },
+        {
+          "district": "East Kameng",
+          "state": "Arunachal Pradesh"
+        }
+      ]
+    },
+    "2": {
+      "cluster_id": 2,
+      "cluster_name": "Tier 3: Progressing / Semi-Urban Transition",
+      "district_count": 194,
+      "pct_of_all_districts": 30.17,
+      "mean_bharatlens_score": 61.03,
+      "mean_score_change": 10.82,
+      "mean_health_score": 67.8,
+      "mean_women_empowerment": 68.82,
+      "mean_infrastructure": 70.44,
+      "mean_economic_score": 45.04,
+      "mean_education_score": 48.1,
+      "mean_urban_pct": 27.77,
+      "representative_districts": [
+        {
+          "district": "Chittoor",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "district": "East Godavari",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "district": "Guntur",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "district": "Krishna",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "district": "Sri Potti Sriramulu Nellore",
+          "state": "Andhra Pradesh"
+        },
+        {
+          "district": "Srikakulam",
+          "state": "Andhra Pradesh"
+        }
+      ]
+    },
+    "3": {
+      "cluster_id": 3,
+      "cluster_name": "Tier 4: Front-Runner / Advanced Socioeconomic",
+      "district_count": 84,
+      "pct_of_all_districts": 13.06,
+      "mean_bharatlens_score": 66.06,
+      "mean_score_change": 12.22,
+      "mean_health_score": 69.3,
+      "mean_women_empowerment": 74.94,
+      "mean_infrastructure": 80.14,
+      "mean_economic_score": 39.22,
+      "mean_education_score": 65.86,
+      "mean_urban_pct": 69.26,
+      "representative_districts": [
+        {
+          "district": "Nicobar",
+          "state": "Andaman & Nicobar Island"
+        },
+        {
+          "district": "North & Middle Andaman",
+          "state": "Andaman & Nicobar Island"
+        },
+        {
+          "district": "South Andaman",
+          "state": "Andaman & Nicobar Island"
+        },
+        {
+          "district": "Papum Pare",
+          "state": "Arunachal Pradesh"
+        },
+        {
+          "district": "Kamrup Metropolitan",
+          "state": "Assam"
+        },
+        {
+          "district": "Chandigarh",
+          "state": "Chandigarh"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "champion_model_name": "LogisticRegression",
+  "best_macro_f1": 0.802,
+  "class_order": [
+    "Improving",
+    "Stable",
+    "Declining",
+    "Anomalous"
+  ],
+  "confusion_matrix": [
+    [
+      19,
+      6,
+      2,
+      1
+    ],
+    [
+      3,
+      29,
+      4,
+      0
+    ],
+    [
+      0,
+      3,
+      55,
+      0
+    ],
+    [
+      2,
+      0,
+      0,
+      5
+    ]
+  ],
+  "detailed_classification_report": {
+    "Improving": {
+      "precision": 0.7916666666666666,
+      "recall": 0.6785714285714286,
+      "f1-score": 0.7307692307692307,
+      "support": 28.0
+    },
+    "Stable": {
+      "precision": 0.7631578947368421,
+      "recall": 0.8055555555555556,
+      "f1-score": 0.7837837837837838,
+      "support": 36.0
+    },
+    "Declining": {
+      "precision": 0.9016393442622951,
+      "recall": 0.9482758620689655,
+      "f1-score": 0.9243697478991597,
+      "support": 58.0
+    },
+    "Anomalous": {
+      "precision": 0.8333333333333334,
+      "recall": 0.7142857142857143,
+      "f1-score": 0.7692307692307693,
+      "support": 7.0
+    },
+    "accuracy": 0.8372093023255814,
+    "macro avg": {
+      "precision": 0.8224493097497844,
+      "recall": 0.786672140120416,
+      "f1-score": 0.8020383829207358,
+      "support": 129.0
+    },
+    "weighted avg": {
+      "precision": 0.8354167920754995,
+      "recall": 0.8372093023255814,
+      "f1-score": 0.8346962437249714,
+      "support": 129.0
+    }
+  },
+  "benchmark_table": [
+    {
+      "model_name": "RandomForestClassifier",
+      "accuracy": 0.7519,
+      "macro_precision": 0.7889,
+      "macro_recall": 0.7076,
+      "macro_f1": 0.7383,
+      "cv_f1_macro_mean": 0.637,
+      "cv_f1_macro_std": 0.0542
+    },
+    {
+      "model_name": "GradientBoostingClassifier",
+      "accuracy": 0.7442,
+      "macro_precision": 0.7766,
+      "macro_recall": 0.6792,
+      "macro_f1": 0.7127,
+      "cv_f1_macro_mean": 0.6194,
+      "cv_f1_macro_std": 0.0303
+    },
+    {
+      "model_name": "LogisticRegression",
+      "accuracy": 0.8372,
+      "macro_precision": 0.8224,
+      "macro_recall": 0.7867,
+      "macro_f1": 0.802,
+      "cv_f1_macro_mean": 0.6855,
+      "cv_f1_macro_std": 0.0883
+    },
+    {
+      "model_name": "XGBoostClassifier",
+      "accuracy": 0.7752,
+      "macro_precision": 0.8053,
+      "macro_recall": 0.7324,
+      "macro_f1": 0.7615,
+      "cv_f1_macro_mean": 0.613,
+      "cv_f1_macro_std": 0.056
+    }
+  ]
+}

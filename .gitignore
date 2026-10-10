@@ -1,0 +1,21 @@
+# Environments
+.env
+.venv/
+env/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Large datasets or downloads that should not be committed if desired
+# (keep sample data in data/processed or models if required for offline deployment)
+data/raw/*.tmp
+*.log

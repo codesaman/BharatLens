@@ -1,0 +1,153 @@
+# ==============================================================================
+# BharatLens ML - Central Public Data Source Catalog
+# ==============================================================================
+
+sources:
+  nfhs_district_change:
+    name: "National Family Health Survey (NFHS-4 & NFHS-5) District Factsheets"
+    provider: "International Institute for Population Sciences (IIPS) & Ministry of Health and Family Welfare (MoHFW)"
+    portal_url: "http://rchiips.org/nfhs/"
+    raw_url: "https://raw.githubusercontent.com/SaiSiddhardhaKalla/NFHS/master/India_Change.csv"
+    geographic_level: "District & State (639 districts, 37 States/UTs)"
+    time_period: "2015-16 (NFHS-4) to 2019-21 (NFHS-5)"
+    update_frequency: "Quinquennial (Every ~5 years per survey cycle)"
+    format: "CSV (Wide indicator long-table with 66,976 records)"
+    license: "Open Government Data (OGD) License India / Public Research Domain"
+    important_columns:
+      - "State"
+      - "ST_CEN_CD"
+      - "District Name"
+      - "DISTRICT"
+      - "Category"
+      - "Indicator"
+      - "NFHS 4"
+      - "NFHS 5"
+      - "Change"
+    dimensions_covered:
+      - "Maternal & Child Health"
+      - "Immunization & Disease Prevention"
+      - "Nutrition & Anaemia"
+      - "Women Empowerment & Financial Inclusion"
+      - "Household Infrastructure (Clean Cooking Fuel, Sanitation, Electricity)"
+    transformation_notes: >
+      Pivoted from indicator rows to wide multi-dimensional feature columns per district.
+      Positive health/education indicators where higher is better (e.g., female literacy, institutional births,
+      vaccination, electricity) are aligned with improvement directions; indicators where lower is better
+      (stunting, wasting, anaemia) are inverted for standardized composite scoring.
+
+  census_district_pca:
+    name: "Primary Census Abstract (PCA) & Household Amenities 2011"
+    provider: "Office of the Registrar General & Census Commissioner, India (Ministry of Home Affairs)"
+    portal_url: "https://censusindia.gov.in/"
+    raw_url: "https://raw.githubusercontent.com/nishusharma1608/India-Census-2011-Analysis/master/india-districts-census-2011.csv"
+    geographic_level: "District (640 districts across India)"
+    time_period: "2011 Census Baseline"
+    update_frequency: "Decennial"
+    format: "CSV (118 structural socioeconomic attributes)"
+    license: "Government of India Open Data"
+    important_columns:
+      - "District code"
+      - "State name"
+      - "District name"
+      - "Population"
+      - "Literate"
+      - "Workers"
+      - "Agricultural_Workers"
+      - "Cultivator_Workers"
+      - "Housholds_with_Electric_Lighting"
+      - "Households_with_Internet"
+      - "Households_with_Computer"
+      - "LPG_or_PNG_Households"
+      - "Power_Parity_Rs_45000_150000"
+    dimensions_covered:
+      - "Demographic Baseline & Urbanization"
+      - "Workforce Structure & Agricultural Dependency"
+      - "Household Amenities & Digital Penetration"
+    transformation_notes: >
+      Normalized by total district population and total households to create per-capita
+      and per-household baseline ratios (e.g., worker participation rate, digital access rate).
+
+  mgnrega_district_employment:
+    name: "MGNREGA Rural Employment & Economic Safety Net Reports"
+    provider: "Ministry of Rural Development (MoRD), Government of India"
+    portal_url: "https://nrega.nic.in/"
+    raw_url: "https://raw.githubusercontent.com/Arpita-deb/NREGA-Data-Analysis/main/NREGA%20Data.csv"
+    geographic_level: "District (740 districts across India)"
+    time_period: "Financial Year Performance Observations"
+    update_frequency: "Monthly / Annual Financial Year"
+    format: "CSV (Semicolon-delimited, 30 economic and employment indicators)"
+    license: "National Rural Employment Guarantee Scheme Public Domain"
+    important_columns:
+      - "state_name"
+      - "district_name"
+      - "Total No. of JobCards issued"
+      - "Total No. of Active Job Cards"
+      - "Total No. of Active Workers"
+      - "Average days of employment provided per Household"
+      - "Average Wage rate per day per person(Rs.)"
+      - "Total Households Worked"
+      - "Total Exp(Rs. in Lakhs.)"
+      - "Wages(Rs. In Lakhs)"
+      - "% of Expenditure on Agriculture & Agriculture Allied Works"
+      - "Women Persondays"
+    dimensions_covered:
+      - "Rural Employment Intensity & Social Safety Net Demand"
+      - "Daily Wage Rates & Rural Income Floors"
+      - "Agricultural & Natural Resource Management Expenditure"
+    transformation_notes: >
+      Cleaned numeric columns containing currency and counts, mapped district names
+      to census standard, and calculated employment demand ratios.
+
+  subdivision_rainfall:
+    name: "IMD Sub-Divisional Historical Rainfall Time Series (1901-2015)"
+    provider: "India Meteorological Department (IMD), Ministry of Earth Sciences"
+    portal_url: "https://mausam.imd.gov.in/"
+    raw_url: "https://raw.githubusercontent.com/MainakRepositor/Datasets/master/rainfall%20in%20india%201901-2015.csv"
+    geographic_level: "36 Meteorological Subdivisions mapping to all Indian States"
+    time_period: "1901 to 2015 (115 annual observations)"
+    update_frequency: "Annual Historical Series"
+    format: "CSV (Subdivision, Year, Monthly and Seasonal Rainfall in mm)"
+    license: "IMD Open Public Meteorological Data"
+    important_columns:
+      - "DIVISION"
+      - "YEAR"
+      - "ANNUAL"
+      - "Jun-Sep"
+      - "Mar-May"
+    dimensions_covered:
+      - "Monsoon Rainfall Stability"
+      - "Agro-climatic Vulnerability & Rainfall Anomaly Baseline"
+    transformation_notes: >
+      Aggregated historical distribution per state/division (Mean, Standard Deviation,
+      Monsoon share) to provide climate risk baselines for districts in each agro-climatic zone.
+
+  district_boundaries_geojson:
+    name: "Census / LGD Aligned Indian District Spatial Boundaries"
+    provider: "Survey of India / Bharat Administrative Geospatial Open Archive"
+    portal_url: "https://github.com/SaiSiddhardhaKalla/NFHS"
+    raw_url: "https://raw.githubusercontent.com/SaiSiddhardhaKalla/NFHS/master/Districts.geojson"
+    geographic_level: "641 District Boundaries with Census Codes and Names"
+    time_period: "2011 Census Administrative Framework"
+    update_frequency: "Administrative Reorganization Cycles"
+    format: "GeoJSON"
+    license: "Open Data Commons / Research Permissive"
+    important_columns:
+      - "DISTRICT"
+      - "ST_NM"
+      - "censuscode"
+      - "geometry"
+    dimensions_covered:
+      - "Spatial geometry for Choropleth maps and regional spatial proximity"
+
+  data_gov_in_api:
+    name: "Government of India Open Data Platform (OGD) REST API"
+    provider: "National Informatics Centre (NIC) / Ministry of Electronics & IT"
+    portal_url: "https://data.gov.in/"
+    api_endpoint: "https://api.data.gov.in/resource/"
+    geographic_level: "National, State, District"
+    time_period: "Dynamic based on published resource catalogs"
+    update_frequency: "Real-time / Periodic by Ministry"
+    format: "JSON via REST API"
+    license: "Government Open Data License - India (GODL)"
+    auth_mechanism: "api-key parameter in query string (from DATA_GOV_IN_API_KEY env)"
+    fallback_strategy: "Graceful bypass to local cached public repositories when key is empty or network unreachable"

@@ -1,0 +1,138 @@
+# ==============================================================================
+# BharatLens ML - System Configuration
+# ==============================================================================
+
+project:
+  name: "BharatLens ML"
+  version: "1.0.0"
+  description: "Indian District & State Socioeconomic Intelligence & Trend ML Platform"
+  random_state: 42
+
+paths:
+  raw_data_dir: "data/raw"
+  processed_data_dir: "data/processed"
+  external_data_dir: "data/external"
+  models_dir: "models/saved"
+  metadata_dir: "models/metadata"
+  reports_dir: "reports"
+  figures_dir: "reports/figures"
+
+scoring:
+  scale_min: 0.0
+  scale_max: 100.0
+  dimensions:
+    health_nutrition:
+      weight: 0.25
+      indicators:
+        - name: "institutional_births_pct"
+          direction: "positive"
+        - name: "children_vaccinated_pct"
+          direction: "positive"
+        - name: "stunting_under5_pct"
+          direction: "negative"
+        - name: "wasting_under5_pct"
+          direction: "negative"
+        - name: "anaemia_women_pct"
+          direction: "negative"
+        - name: "mothers_anc_visits_pct"
+          direction: "positive"
+
+    women_empowerment:
+      weight: 0.20
+      indicators:
+        - name: "female_literacy_pct"
+          direction: "positive"
+        - name: "women_schooling_10yrs_pct"
+          direction: "positive"
+        - name: "women_bank_account_pct"
+          direction: "positive"
+        - name: "women_household_decisions_pct"
+          direction: "positive"
+        - name: "women_mgnrega_participation_pct"
+          direction: "positive"
+
+    infrastructure_amenities:
+      weight: 0.20
+      indicators:
+        - name: "electricity_access_pct"
+          direction: "positive"
+        - name: "improved_sanitation_pct"
+          direction: "positive"
+        - name: "clean_fuel_cooking_pct"
+          direction: "positive"
+        - name: "improved_drinking_water_pct"
+          direction: "positive"
+        - name: "internet_access_pct"
+          direction: "positive"
+
+    economic_employment:
+      weight: 0.20
+      indicators:
+        - name: "mgnrega_daily_wage_rs"
+          direction: "positive"
+        - name: "mgnrega_avg_days_per_hh"
+          direction: "positive"
+        - name: "worker_participation_rate"
+          direction: "positive"
+        - name: "agri_works_expenditure_pct"
+          direction: "positive"
+
+    demographic_education:
+      weight: 0.15
+      indicators:
+        - name: "census_literacy_rate"
+          direction: "positive"
+        - name: "sex_ratio"
+          direction: "positive"
+        - name: "urban_population_pct"
+          direction: "positive"
+
+ml:
+  test_size: 0.20
+  cv_folds: 5
+
+  clustering:
+    algorithm: "kmeans"
+    candidate_k: [3, 4, 5, 6]
+    selected_k: 4
+    random_state: 42
+    cluster_names:
+      0: "Aspirational / High-Priority"
+      1: "Developing / Transitioning"
+      2: "Progressing / Intermediate"
+      3: "Front-Runner / Developed"
+
+  anomaly_detection:
+    primary_algorithm: "isolation_forest"
+    contamination: 0.05
+    n_estimators: 150
+    lof_neighbors: 20
+
+  regression:
+    target: "score_change_predicted"
+    algorithms:
+      - "random_forest"
+      - "gradient_boosting"
+      - "ridge"
+      - "xgboost"
+    rf_params:
+      n_estimators: 150
+      max_depth: 8
+      min_samples_split: 4
+      random_state: 42
+    gb_params:
+      n_estimators: 150
+      learning_rate: 0.05
+      max_depth: 5
+      random_state: 42
+
+  classification:
+    target: "trend_class"
+    classes:
+      - "Improving"
+      - "Stable"
+      - "Declining"
+      - "Anomalous"
+    thresholds:
+      improving_min_delta: 2.0
+      declining_max_delta: -2.0

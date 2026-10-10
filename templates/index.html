@@ -1,0 +1,716 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Section Tabs Container -->
+
+<!-- TAB 1: NATIONAL OVERVIEW -->
+<section id="tab-overview" class="portal-tab-content">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <div>
+      <h2 class="h4 fw-bold text-navy mb-1">National District Intelligence Overview</h2>
+      <p class="text-muted small mb-0">Empirical socioeconomic progress, growth momentum classification, and outlier detection across 643 Indian districts.</p>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <span class="badge bg-light text-dark border py-2 px-3 fw-semibold small">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#138808" class="me-1"><circle cx="12" cy="12" r="10"/></svg>
+        Cycle: NFHS-4 to NFHS-5 Panel
+      </span>
+    </div>
+  </div>
+
+  <!-- KPI Mini Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-xl-2 col-md-4 col-sm-6">
+      <div class="kpi-card border-top-navy">
+        <div class="kpi-label">Districts Tracked</div>
+        <div class="kpi-value" id="kpi-total-districts">643</div>
+        <div class="kpi-subtext text-muted">37 States & UTs</div>
+      </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-sm-6">
+      <div class="kpi-card border-top-saffron">
+        <div class="kpi-label">National Avg Score</div>
+        <div class="kpi-value text-primary" id="kpi-national-score">56.0</div>
+        <div class="kpi-subtext text-success">▲ +11.1 vs Baseline</div>
+      </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-sm-6">
+      <div class="kpi-card border-top-green">
+        <div class="kpi-label">Improving Momentum</div>
+        <div class="kpi-value text-success" id="kpi-improving">142</div>
+        <div class="kpi-subtext text-success">22.1% Accelerating</div>
+      </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-sm-6">
+      <div class="kpi-card border-top-blue">
+        <div class="kpi-label">Stable / Pacing</div>
+        <div class="kpi-value text-info" id="kpi-stable">180</div>
+        <div class="kpi-subtext text-info">28.0% Median Track</div>
+      </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-sm-6">
+      <div class="kpi-card" style="border-top: 3px solid #dc3545 !important;">
+        <div class="kpi-label">Relative Lagging</div>
+        <div class="kpi-value text-danger" id="kpi-declining">288</div>
+        <div class="kpi-subtext text-danger">44.8% Decelerating</div>
+      </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-sm-6">
+      <div class="kpi-card" style="border-top: 3px solid #6f42c1 !important;">
+        <div class="kpi-label">Anomaly Outliers</div>
+        <div class="kpi-value" style="color: #6f42c1;" id="kpi-anomalies">33</div>
+        <div class="kpi-subtext text-purple">5.1% Irregular Path</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pan-India Geospatial Map Card -->
+  <div class="gov-card mb-4">
+    <div class="gov-card-header">
+      <h3 class="gov-card-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        Pan-India Geospatial Intelligence Distribution
+      </h3>
+      <div class="d-flex align-items-center gap-2">
+        <label for="map-metric-select" class="small fw-semibold text-muted text-nowrap">Metric Layer:</label>
+        <select id="map-metric-select" class="form-select form-select-sm gov-select" style="min-width: 220px;">
+          <option value="score">BharatLens Score (0-100)</option>
+          <option value="delta">Score Delta (NFHS-5 vs NFHS-4)</option>
+          <option value="trend">Trend Classification</option>
+          <option value="tier">Socioeconomic Tier</option>
+          <option value="anomaly">Anomaly Risk Score (0-100)</option>
+        </select>
+      </div>
+    </div>
+    <div class="gov-card-body p-1">
+      <div id="india-map-container" style="height: 520px; width: 100%;"></div>
+    </div>
+  </div>
+
+  <!-- Leaderboard Tables Row -->
+  <div class="row g-3">
+    <div class="col-lg-6">
+      <div class="gov-card h-100">
+        <div class="gov-card-header">
+          <h3 class="gov-card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#ff9933"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/></svg>
+            Top 10 Leading Districts in India
+          </h3>
+          <span class="badge bg-success-subtle text-success border border-success-subtle small">Highest Overall Scores</span>
+        </div>
+        <div class="gov-card-body p-0 table-responsive">
+          <table class="gov-table" id="top-districts-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>District</th>
+                <th>State / UT</th>
+                <th>Score</th>
+                <th>Progress Delta</th>
+                <th>Trend Class</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="gov-card h-100">
+        <div class="gov-card-header">
+          <h3 class="gov-card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#dc3545"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+            Priority Aspirational & Anomaly Alerts
+          </h3>
+          <span class="badge bg-danger-subtle text-danger border border-danger-subtle small">Needs Intervention</span>
+        </div>
+        <div class="gov-card-body p-0 table-responsive">
+          <table class="gov-table" id="alert-districts-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>District</th>
+                <th>State / UT</th>
+                <th>Score</th>
+                <th>Anomaly Risk</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- TAB 2: DISTRICT DEEP-DIVE -->
+<section id="tab-district" class="portal-tab-content" style="display: none;">
+  <!-- Selector Filter Bar -->
+  <div class="gov-card mb-4 border-top-navy">
+    <div class="gov-card-body py-3">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-5">
+          <label for="select-district-state" class="form-label small fw-bold text-muted text-uppercase mb-1">State / Union Territory</label>
+          <select id="select-district-state" class="form-select gov-select"></select>
+        </div>
+        <div class="col-md-5">
+          <label for="select-district-name" class="form-label small fw-bold text-muted text-uppercase mb-1">District</label>
+          <select id="select-district-name" class="form-select gov-select"></select>
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+          <button type="button" class="btn btn-gov-primary w-100 mt-md-4" id="btn-load-district">
+            Inspect District
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- District Header Banner Card -->
+  <div class="gov-card mb-4 border-top-saffron" id="district-header-card">
+    <div class="gov-card-body p-4">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+          <div class="text-muted small fw-semibold text-uppercase" id="d-state-label">State / UT</div>
+          <h2 class="portal-title" style="font-size: 2rem;" id="d-title">Select District</h2>
+          <div class="text-muted small mt-1 d-flex gap-3 flex-wrap">
+            <span>Census Population: <strong class="text-dark" id="d-pop">-</strong></span>
+            <span>|</span>
+            <span>Urbanization: <strong class="text-dark" id="d-urban">-</strong></span>
+            <span>|</span>
+            <span>Historical Avg: <strong class="text-dark" id="d-hist-avg">-</strong></span>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-2 flex-wrap" id="d-badges-wrap">
+          <span class="gov-badge badge-tier" id="d-badge-tier">Tier -</span>
+          <span class="gov-badge badge-stable" id="d-badge-trend">Trend -</span>
+          <span class="gov-badge badge-anomaly" id="d-badge-anomaly" style="display: none;">Anomaly Alert</span>
+        </div>
+      </div>
+
+      <hr class="my-3">
+
+      <!-- Score Summary Strips -->
+      <div class="row g-3 align-items-center">
+        <div class="col-md-3 text-center border-end">
+          <div class="kpi-label">BharatLens Index</div>
+          <div class="display-6 fw-bold text-navy" id="d-score-curr">0.0</div>
+          <div class="small fw-semibold" id="d-score-change">+0.0 vs NFHS-4</div>
+        </div>
+        <div class="col-md-3 text-center border-end">
+          <div class="kpi-label">State Average</div>
+          <div class="h3 fw-bold text-dark mb-0" id="d-state-avg">0.0</div>
+          <div class="small text-muted" id="d-state-diff">0.0 vs State</div>
+        </div>
+        <div class="col-md-3 text-center border-end">
+          <div class="kpi-label">National Average</div>
+          <div class="h3 fw-bold text-dark mb-0" id="d-nat-avg">56.0</div>
+          <div class="small text-muted" id="d-nat-diff">0.0 vs India</div>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="kpi-label">Relative Growth Z-Score</div>
+          <div class="h3 fw-bold text-dark mb-0" id="d-zscore">0.00σ</div>
+          <div class="small text-muted">Momentum Benchmark</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dimension Radar & Historical Paired Bar Row -->
+  <div class="row g-3 mb-4">
+    <div class="col-lg-5">
+      <div class="gov-card h-100">
+        <div class="gov-card-header">
+          <h3 class="gov-card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            5-Dimension Socioeconomic Radar
+          </h3>
+        </div>
+        <div class="gov-card-body d-flex justify-content-center align-items-center">
+          <div style="max-width: 380px; width: 100%; height: 340px;">
+            <canvas id="district-radar-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="gov-card h-100">
+        <div class="gov-card-header">
+          <h3 class="gov-card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg>
+            Historical Tracking Comparison (NFHS-4 vs NFHS-5)
+          </h3>
+        </div>
+        <div class="gov-card-body">
+          <div style="height: 330px; width: 100%;">
+            <canvas id="district-hist-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Machine Learning Forecast & SHAP Attribution Row -->
+  <div class="row g-3 mb-4">
+    <div class="col-lg-5">
+      <div class="gov-card h-100 border-top-navy">
+        <div class="gov-card-header">
+          <h3 class="gov-card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 3L5 6.99h3V14h2V6.99h3L9 3zm7 14.01V10h-2v7.01h-3L15 21l4-3.99h-3z"/></svg>
+            ML Predictive Trajectory Forecast
+          </h3>
+          <span class="badge bg-primary-subtle text-primary border border-primary-subtle small">Ridge & Logistic Champion</span>
+        </div>
+        <div class="gov-card-body">
+          <div class="p-3 bg-light rounded border mb-3">
+            <div class="small fw-bold text-uppercase text-muted">Projected Next-Cycle Index</div>
+            <div class="h2 fw-bold text-navy my-1" id="ml-pred-score">0.0 / 100</div>
+            <div class="small fw-semibold" id="ml-pred-delta">+0.0 points predicted change</div>
+          </div>
+          <div class="mb-3">
+            <div class="small text-muted">Predicted Trajectory Class:</div>
+            <div class="h5 fw-bold text-dark" id="ml-pred-class">Stable</div>
+          </div>
+          <div class="mb-3">
+            <div class="small text-muted">Model Confidence:</div>
+            <div class="progress" style="height: 10px;">
+              <div class="progress-bar bg-success" id="ml-conf-bar" style="width: 85%;"></div>
+            </div>
+            <div class="small text-muted mt-1 text-end" id="ml-conf-val">85.0% Confidence</div>
+          </div>
+          <div class="p-3 bg-light-subtle rounded border small text-muted" id="ml-shap-narrative">
+            Loading explainable attribution...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="gov-card h-100 border-top-saffron">
+        <div class="gov-card-header">
+          <h3 class="gov-card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            Local SHAP Prediction Drivers (Explainable AI)
+          </h3>
+          <span class="badge bg-secondary-subtle text-dark border small">LinearExplainer Feature Attribution</span>
+        </div>
+        <div class="gov-card-body">
+          <div style="height: 330px; width: 100%;">
+            <canvas id="district-shap-chart"></canvas>
+          </div>
+          <div class="small text-muted mt-2">
+            * Green bars indicate features driving predicted upward momentum; red bars indicate negative headwinds pulling the projection down.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Socioeconomic Peer Districts Table -->
+  <div class="gov-card">
+    <div class="gov-card-header">
+      <h3 class="gov-card-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        Socioeconomic Peer Group Districts (Same Cluster Tier)
+      </h3>
+    </div>
+    <div class="gov-card-body p-0 table-responsive">
+      <table class="gov-table" id="district-peers-table">
+        <thead>
+          <tr>
+            <th>District</th>
+            <th>State / UT</th>
+            <th>BharatLens Score</th>
+            <th>Progress Delta</th>
+            <th>Trend Class</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- TAB 3: STATE EXPLORER -->
+<section id="tab-state" class="portal-tab-content" style="display: none;">
+  <!-- State Selector Bar -->
+  <div class="gov-card mb-4 border-top-navy">
+    <div class="gov-card-body py-3">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-9">
+          <label for="select-state-view" class="form-label small fw-bold text-muted text-uppercase mb-1">Select State / Union Territory for Inter-District Comparative Analysis</label>
+          <select id="select-state-view" class="form-select gov-select"></select>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button type="button" class="btn btn-gov-primary w-100" id="btn-load-state">
+            Inspect State Disparities
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- State KPI Row -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="kpi-card border-top-navy">
+        <div class="kpi-label">Districts in State</div>
+        <div class="kpi-value" id="st-kpi-count">0</div>
+        <div class="kpi-subtext text-muted">Comprehensive Ingestion</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="kpi-card border-top-saffron">
+        <div class="kpi-label">State Mean Index</div>
+        <div class="kpi-value text-primary" id="st-kpi-mean">0.0</div>
+        <div class="kpi-subtext" id="st-kpi-vs-nat">vs National Benchmark</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="kpi-card border-top-green">
+        <div class="kpi-label">Leading District</div>
+        <div class="h3 fw-bold text-success mb-1 text-truncate" id="st-kpi-lead">-</div>
+        <div class="kpi-subtext text-success" id="st-kpi-lead-score">Score: 0.0</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="kpi-card" style="border-top: 3px solid #dc3545 !important;">
+        <div class="kpi-label">Lagging District</div>
+        <div class="h3 fw-bold text-danger mb-1 text-truncate" id="st-kpi-lag">-</div>
+        <div class="kpi-subtext text-danger" id="st-kpi-lag-score">Score: 0.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- State Donut Charts Row -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-6">
+      <div class="gov-card h-100">
+        <div class="gov-card-header">
+          <h3 class="gov-card-title">Trend Classification Distribution in State</h3>
+        </div>
+        <div class="gov-card-body d-flex justify-content-center align-items-center">
+          <div style="max-width: 280px; width: 100%; height: 260px;">
+            <canvas id="state-trend-donut"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="gov-card h-100">
+        <div class="gov-card-header">
+          <h3 class="gov-card-title">Socioeconomic Tier Distribution in State</h3>
+        </div>
+        <div class="gov-card-body d-flex justify-content-center align-items-center">
+          <div style="max-width: 280px; width: 100%; height: 260px;">
+            <canvas id="state-tier-donut"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- State District Leaderboard & Ranking Chart -->
+  <div class="gov-card mb-4">
+    <div class="gov-card-header">
+      <h3 class="gov-card-title">Inter-District Ranking in <span id="state-ranking-title-name">State</span></h3>
+      <span class="badge bg-light text-dark border small">Sorted by BharatLens Score</span>
+    </div>
+    <div class="gov-card-body">
+      <div style="min-height: 380px; width: 100%;" class="mb-4">
+        <canvas id="state-ranking-chart"></canvas>
+      </div>
+
+      <div class="table-responsive">
+        <table class="gov-table" id="state-districts-table">
+          <thead>
+            <tr>
+              <th># Rank</th>
+              <th>District</th>
+              <th>Score</th>
+              <th>Delta</th>
+              <th>Trend Classification</th>
+              <th>Socioeconomic Tier</th>
+              <th>Anomaly Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- TAB 4: ML INSIGHTS & EVALUATION -->
+<section id="tab-ml" class="portal-tab-content" style="display: none;">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <div>
+      <h2 class="h4 fw-bold text-navy mb-1">Machine Learning Benchmarks & AI Governance</h2>
+      <p class="text-muted small mb-0">Empirical model comparisons, cross-validation metrics, confusion matrices, and global SHAP drivers.</p>
+    </div>
+  </div>
+
+  <!-- Regression Benchmark Card -->
+  <div class="gov-card mb-4 border-top-navy">
+    <div class="gov-card-header">
+      <h3 class="gov-card-title">1. Trend Forecasting Regressor Benchmark Comparison (Score Delta)</h3>
+      <span class="badge bg-success-subtle text-success border border-success-subtle small">Champion Selected by Min RMSE</span>
+    </div>
+    <div class="gov-card-body p-0 table-responsive">
+      <table class="gov-table" id="ml-reg-table">
+        <thead>
+          <tr>
+            <th>Model Architecture</th>
+            <th>Test MAE</th>
+            <th>Test RMSE</th>
+            <th>Test R² Score</th>
+            <th>5-Fold CV R² (Mean ± Std)</th>
+            <th>Selection Decision</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Classification Benchmark Card -->
+  <div class="gov-card mb-4 border-top-saffron">
+    <div class="gov-card-header">
+      <h3 class="gov-card-title">2. Multi-Class Trend Classification Benchmark Comparison</h3>
+      <span class="badge bg-success-subtle text-success border border-success-subtle small">Champion Selected by Max Macro-F1</span>
+    </div>
+    <div class="gov-card-body p-0 table-responsive">
+      <table class="gov-table" id="ml-clf-table">
+        <thead>
+          <tr>
+            <th>Model Architecture</th>
+            <th>Test Accuracy</th>
+            <th>Macro Precision</th>
+            <th>Macro Recall</th>
+            <th>Macro F1 Score</th>
+            <th>5-Fold CV Macro-F1</th>
+            <th>Selection Decision</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Confusion Matrix & Global SHAP Row -->
+  <div class="row g-3 mb-4">
+    <div class="col-lg-5">
+      <div class="gov-card h-100">
+        <div class="gov-card-header">
+          <h3 class="gov-card-title">Classification Confusion Matrix</h3>
+          <span class="badge bg-light text-dark border small">Test Set Evaluation</span>
+        </div>
+        <div class="gov-card-body p-0 table-responsive">
+          <table class="gov-table" id="ml-cm-table">
+            <thead>
+              <tr>
+                <th>True \ Predicted</th>
+                <th>Improving</th>
+                <th>Stable</th>
+                <th>Declining</th>
+                <th>Anomalous</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="gov-card h-100">
+        <div class="gov-card-header">
+          <h3 class="gov-card-title">Top 12 Global Predictive Feature Drivers (SHAP)</h3>
+          <span class="badge bg-light text-dark border small">Mean Absolute SHAP Value</span>
+        </div>
+        <div class="gov-card-body">
+          <div style="height: 340px; width: 100%;">
+            <canvas id="ml-global-shap-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Socioeconomic Tier Profiles Table -->
+  <div class="gov-card mb-4">
+    <div class="gov-card-header">
+      <h3 class="gov-card-title">3. Socioeconomic Cluster Tiers (K-Means Clustering)</h3>
+      <span class="badge bg-info-subtle text-info border border-info-subtle small">k=4, Silhouette: 0.2061</span>
+    </div>
+    <div class="gov-card-body p-0 table-responsive">
+      <table class="gov-table" id="ml-clusters-table">
+        <thead>
+          <tr>
+            <th>Tier ID</th>
+            <th>Tier Classification</th>
+            <th>Districts</th>
+            <th>National Share</th>
+            <th>Mean Score</th>
+            <th>Mean Progress Delta</th>
+            <th>Mean Urban %</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- TAB 5: PUBLIC DATA SOURCES -->
+<section id="tab-sources" class="portal-tab-content" style="display: none;">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <div>
+      <h2 class="h4 fw-bold text-navy mb-1">Public Data Sources & Quality Assurance Telemetry</h2>
+      <p class="text-muted small mb-0">Government of India open datasets, collection frequencies, and automated validation telemetry.</p>
+    </div>
+  </div>
+
+  <div id="sources-catalog-container" class="mb-4"></div>
+
+  <!-- Data Validation Quality Report Card -->
+  <div class="gov-card border-top-green">
+    <div class="gov-card-header">
+      <h3 class="gov-card-title">Automated Data Quality Audit Summary</h3>
+      <span class="badge bg-success-subtle text-success border border-success-subtle small">Status: PASSED (100% Completeness)</span>
+    </div>
+    <div class="gov-card-body">
+      <div class="row g-3 text-center mb-4">
+        <div class="col-md-3">
+          <div class="p-3 bg-light rounded border">
+            <div class="small text-muted">Audited Records</div>
+            <div class="h3 fw-bold text-navy my-1">643</div>
+            <div class="small text-success">0 Duplicate Rows</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="p-3 bg-light rounded border">
+            <div class="small text-muted">Engineered Features</div>
+            <div class="h3 fw-bold text-navy my-1">143</div>
+            <div class="small text-success">Validated Schemas</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="p-3 bg-light rounded border">
+            <div class="small text-muted">Overall Completeness</div>
+            <div class="h3 fw-bold text-success my-1">100.0%</div>
+            <div class="small text-muted">Median Imputed</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="p-3 bg-light rounded border">
+            <div class="small text-muted">Boundary Range Violations</div>
+            <div class="h3 fw-bold text-success my-1">0</div>
+            <div class="small text-success">Strict Domain Checks</div>
+          </div>
+        </div>
+      </div>
+      <p class="small text-muted mb-0">
+        * Every public dataset undergoes automatic validation for missing fields, impossible percentage values (<0% or >100%), duplicate district entities, and geographic spelling standardizations before feature engineering.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- TAB 6: METHODOLOGY & SCORING -->
+<section id="tab-methodology" class="portal-tab-content" style="display: none;">
+  <div class="gov-card mb-4 border-top-navy">
+    <div class="gov-card-header">
+      <h2 class="gov-card-title">Mathematical Formulation of the BharatLens Score (0–100 Scale)</h2>
+    </div>
+    <div class="gov-card-body">
+      <p>
+        The <strong>BharatLens Score</strong> is an interpretable, reproducible index scaled strictly from <strong>0 to 100</strong>, synthesizing 5 primary socioeconomic dimensions using empirical public data:
+      </p>
+      <div class="table-responsive mb-4">
+        <table class="gov-table">
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>Weight ($w_d$)</th>
+              <th>Tracking Indicators</th>
+              <th>Directional Polarity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Health & Nutrition</strong></td>
+              <td>25% (0.25)</td>
+              <td>Institutional births, Full immunization, 4+ ANC visits, Stunting (reversed), Wasting (reversed), Anaemia (reversed)</td>
+              <td>Positive for care access; Inverted for burden rates</td>
+            </tr>
+            <tr>
+              <td><strong>2. Women Empowerment</strong></td>
+              <td>20% (0.20)</td>
+              <td>Female literacy, 10+ years schooling, Rural female MGNREGA labour participation</td>
+              <td>Positive (Higher = Better)</td>
+            </tr>
+            <tr>
+              <td><strong>3. Infrastructure & Living Amenities</strong></td>
+              <td>20% (0.20)</td>
+              <td>Household electricity, Improved sanitation, Clean cooking fuel, Internet access</td>
+              <td>Positive (Higher = Better)</td>
+            </tr>
+            <tr>
+              <td><strong>4. Economic & Employment Floor</strong></td>
+              <td>20% (0.20)</td>
+              <td>MGNREGA daily wage (₹), Workdays provided per household, Workforce participation rate, Agricultural works expenditure</td>
+              <td>Positive (Higher = Better)</td>
+            </tr>
+            <tr>
+              <td><strong>5. Demographic & Educational Baseline</strong></td>
+              <td>15% (0.15)</td>
+              <td>Decadal literacy rate, Sex ratio (females per 1000 males), Urbanization rate</td>
+              <td>Positive (Higher = Better)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 class="h6 fw-bold text-navy">Directional Min-Max Normalization:</h4>
+      <div class="p-3 bg-light rounded border mb-3 font-monospace small">
+        Positive Indicators:   Score_norm = ((x - min(x)) / (max(x) - min(x))) * 100<br>
+        Burden Indicators:     Score_norm = ((max(x) - x) / (max(x) - min(x))) * 100
+      </div>
+
+      <h4 class="h6 fw-bold text-navy">Peer-Relative Momentum Z-Score ($Z_{\Delta}$):</h4>
+      <p class="small text-muted">
+        To overcome national baseline drift (where nationwide schemes lift all raw figures simultaneously), growth momentum is measured relative to national and state peer groups:
+      </p>
+      <div class="p-3 bg-light rounded border mb-4 font-monospace small">
+        Z_delta = (Delta_Score - Mean_National_Delta) / Std_National_Delta
+      </div>
+      <ul class="small text-muted">
+        <li><strong>Improving:</strong> Above-average momentum ($Z_{\Delta} \ge +0.35$ or relative state growth $\ge +1.5$ points).</li>
+        <li><strong>Stable:</strong> Consistent tracking with benchmark momentum ($-0.35 \le Z_{\Delta} < +0.35$).</li>
+        <li><strong>Declining:</strong> Below-average momentum ($Z_{\Delta} < -0.35$, falling behind peer pace).</li>
+        <li><strong>Anomalous:</strong> Multi-variate outlier flagged by Isolation Forest ($contamination = 0.05$).</li>
+      </ul>
+
+      <hr class="my-4">
+
+      <h4 class="h6 fw-bold text-navy">Ethical AI & Research Disclaimers:</h4>
+      <p class="small text-muted mb-0">
+        • <strong>Association vs. Causation:</strong> All model features and SHAP explanations represent statistical associations learned across empirical observations. They do not assert deterministic legal or causal responsibility.<br>
+        • <strong>Administrative Boundaries:</strong> Districts correspond to the 640-district framework mapped across Census 2011 and NFHS survey cycles. Newly bifurcated districts inherit apportioned baselines from parent units.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

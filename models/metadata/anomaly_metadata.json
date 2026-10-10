@@ -1,0 +1,185 @@
+{
+  "primary_model": "Isolation Forest",
+  "validation_model": "Local Outlier Factor (LOF)",
+  "features_used": [
+    "score_change",
+    "state_relative_growth_delta",
+    "relative_growth_zscore",
+    "feat_institutional_births_abs_change",
+    "feat_stunting_under5_abs_change",
+    "feat_anaemia_women_abs_change",
+    "feat_female_literacy_abs_change",
+    "feat_clean_fuel_cooking_abs_change",
+    "feat_stunting_under5_nfhs5_state_zscore",
+    "feat_mgnrega_daily_wage_rs_state_zscore"
+  ],
+  "contamination": 0.05,
+  "anomalous_districts_count": 33,
+  "diagnostics": [
+    {
+      "district": "Tirap",
+      "state": "Arunachal Pradesh",
+      "anomaly_risk_score": 79.16,
+      "score_change": 22.98,
+      "top_deviating_features": {
+        "feat_stunting_under5_abs_change": 2.92,
+        "relative_growth_zscore": 2.47,
+        "score_change": 2.47
+      }
+    },
+    {
+      "district": "Dhubri",
+      "state": "Assam",
+      "anomaly_risk_score": 79.76,
+      "score_change": 17.24,
+      "top_deviating_features": {
+        "feat_stunting_under5_abs_change": 3.69,
+        "feat_anaemia_women_abs_change": 2.92,
+        "feat_institutional_births_abs_change": 2.03
+      }
+    },
+    {
+      "district": "Jorhat",
+      "state": "Assam",
+      "anomaly_risk_score": 79.08,
+      "score_change": 24.07,
+      "top_deviating_features": {
+        "feat_institutional_births_abs_change": 3.4,
+        "feat_anaemia_women_abs_change": 3.38,
+        "state_relative_growth_delta": 3.28
+      }
+    },
+    {
+      "district": "Sivasagar",
+      "state": "Assam",
+      "anomaly_risk_score": 85.79,
+      "score_change": 25.95,
+      "top_deviating_features": {
+        "state_relative_growth_delta": 3.79,
+        "feat_institutional_births_abs_change": 3.34,
+        "feat_anaemia_women_abs_change": 3.15
+      }
+    },
+    {
+      "district": "Bastar",
+      "state": "Chhattisgarh",
+      "anomaly_risk_score": 85.77,
+      "score_change": 15.69,
+      "top_deviating_features": {
+        "feat_anaemia_women_abs_change": 3.67,
+        "feat_stunting_under5_abs_change": 3.66,
+        "feat_institutional_births_abs_change": 2.0
+      }
+    },
+    {
+      "district": "Bilaspur",
+      "state": "Chhattisgarh",
+      "anomaly_risk_score": 77.14,
+      "score_change": 21.36,
+      "top_deviating_features": {
+        "feat_institutional_births_abs_change": 2.67,
+        "feat_anaemia_women_abs_change": 2.67,
+        "feat_mgnrega_daily_wage_rs_state_zscore": 2.51
+      }
+    },
+    {
+      "district": "Dantewada",
+      "state": "Chhattisgarh",
+      "anomaly_risk_score": 93.29,
+      "score_change": 18.22,
+      "top_deviating_features": {
+        "feat_anaemia_women_abs_change": 3.6,
+        "feat_stunting_under5_abs_change": 3.46,
+        "feat_institutional_births_abs_change": 3.14
+      }
+    },
+    {
+      "district": "Durg",
+      "state": "Chhattisgarh",
+      "anomaly_risk_score": 81.71,
+      "score_change": 27.42,
+      "top_deviating_features": {
+        "state_relative_growth_delta": 3.71,
+        "feat_institutional_births_abs_change": 3.4,
+        "relative_growth_zscore": 3.4
+      }
+    },
+    {
+      "district": "Central",
+      "state": "Delhi",
+      "anomaly_risk_score": 78.03,
+      "score_change": 29.21,
+      "top_deviating_features": {
+        "feat_clean_fuel_cooking_abs_change": 4.64,
+        "relative_growth_zscore": 3.77,
+        "score_change": 3.77
+      }
+    },
+    {
+      "district": "East",
+      "state": "Delhi",
+      "anomaly_risk_score": 81.86,
+      "score_change": 29.39,
+      "top_deviating_features": {
+        "feat_clean_fuel_cooking_abs_change": 4.66,
+        "relative_growth_zscore": 3.81,
+        "score_change": 3.81
+      }
+    },
+    {
+      "district": "New Delhi",
+      "state": "Delhi",
+      "anomaly_risk_score": 79.44,
+      "score_change": 29.57,
+      "top_deviating_features": {
+        "feat_clean_fuel_cooking_abs_change": 4.61,
+        "score_change": 3.85,
+        "relative_growth_zscore": 3.85
+      }
+    },
+    {
+      "district": "North",
+      "state": "Delhi",
+      "anomaly_risk_score": 85.19,
+      "score_change": 30.5,
+      "top_deviating_features": {
+        "feat_clean_fuel_cooking_abs_change": 4.69,
+        "score_change": 4.04,
+        "relative_growth_zscore": 4.04
+      }
+    },
+    {
+      "district": "North East",
+      "state": "Delhi",
+      "anomaly_risk_score": 85.07,
+      "score_change": 30.56,
+      "top_deviating_features": {
+        "feat_clean_fuel_cooking_abs_change": 4.66,
+        "relative_growth_zscore": 4.05,
+        "score_change": 4.05
+      }
+    },
+    {
+      "district": "North West",
+      "state": "Delhi",
+      "anomaly_risk_score": 81.74,
+      "score_change": 27.63,
+      "top_deviating_features": {
+        "feat_clean_fuel_cooking_abs_change": 4.6,
+        "relative_growth_zscore": 3.44,
+        "score_change": 3.44
+      }
+    },
+    {
+      "district": "South",
+      "state": "Delhi",
+      "anomaly_risk_score": 92.47,
+      "score_change": 30.4,
+      "top_deviating_features": {
+        "feat_clean_fuel_cooking_abs_change": 4.66,
+        "score_change": 4.02,
+        "relative_growth_zscore": 4.02
+      }
+    }
+  ]
+}
